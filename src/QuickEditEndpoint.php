@@ -56,7 +56,7 @@ final class QuickEditEndpoint extends BaseEndpoint
 		if ($selectedEntity === null) {
 			throw new \InvalidArgumentException(sprintf('Entity "%s" with identifier "%s" does not exist.', $class, $id));
 		}
-		$setter = 'set' . $property;
+		$setter = 'set' . ucfirst($property);
 		if (\method_exists($selectedEntity, $setter) === false) {
 			throw new \InvalidArgumentException(sprintf(
 				'Entity "%s" with identifier "%s" can not be changed, because setter "%s" does not exist.',
@@ -103,7 +103,7 @@ final class QuickEditEndpoint extends BaseEndpoint
 		}
 
 		$this->entityManager->flush();
-		$this->flashMessage(sprintf('Property "%s" has been changed.', $property), 'success');
+		$this->flashMessage(sprintf('Property "%s" has been changed. [%s]', $property, $id), 'success');
 		$this->sendOk();
 	}
 
